@@ -1,3 +1,7 @@
+## 1.1.1
+
+* **Metadata Fix**: Updated repository and issue tracker URLs to point to the new GitHub repository.
+
 ## 1.1.0
 
 * **Improved Setup**: Automatic JS interop script injection. No manual `index.html` changes required for the bridge.
