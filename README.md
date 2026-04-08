@@ -21,7 +21,7 @@ Add the dependency to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  shopify_app_bridge_flutter: ^0.1.0
+  shopify_app_bridge_flutter: ^1.1.2
 ```
 
 ## Setup (Flutter Web)
@@ -32,6 +32,7 @@ This package is designed to be **plug-and-play**. You no longer need to manually
 
 ```html
 <!-- Shopify App Bridge CDN -->
+<meta name="shopify-api-key" content="509606f*******00da0d89" /> <!-- your_api_key_here -->
 <script src="https://cdn.shopify.com/shopifycloud/app-bridge.js"></script>
 ```
 
@@ -50,7 +51,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   await ShopifyAppBridge.init(
-    apiKey: 'your_api_key_here',
+    apiKey: '509606f*******00da0d89', // your_api_key_here
     host: ShopifyHostHelper.hostFromUrl(),
   );
 
@@ -95,9 +96,33 @@ ShopifyRedirect.toOrders();
 ShopifyRedirect.toAdminPath('/settings');
 ```
 
+## Building for Shopify Admin (Web)
+
+Flutter's default `flutter build web` uses the **CanvasKit renderer**, which requires `crossOriginIsolated` headers that Shopify Admin iframes do not provide — resulting in a black screen or blank app after the splash.
+
+Instead of `flutter build web`, use the build tool included in this package:
+
+```bash
+dart run shopify_app_bridge_flutter:build_web
+```
+
+This runs `flutter build web` and then automatically patches `build/web/flutter_bootstrap.js` to:
+
+- **Force the HTML renderer** when running inside a cross-origin iframe (no black screen)
+- **Unregister stale service workers** in iframe context (prevents blank screen after splash)
+
+All standard `flutter build web` flags are supported:
+
+```bash
+dart run shopify_app_bridge_flutter:build_web --release
+dart run shopify_app_bridge_flutter:build_web --dart-define=ENV=production
+```
+
+> The patch is idempotent — safe to re-run. If `flutter_bootstrap.js` is already patched it exits immediately.
+
 ## Additional Information
 
 Building Shopify apps with Flutter is powerful! This package handles the complex JS interop layer so you can focus on building your features.
 
 - **Issues**: Report bugs at our [GitHub Repository](https://github.com/your-org/shopify_app_bridge_flutter/issues).
-- **Contribution**: PRs are welcome! 
+- **Contribution**: PRs are welcome! Open source contributions of any kind — bug fixes, new features, docs improvements — are encouraged and appreciated.

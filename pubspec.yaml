@@ -1,6 +1,6 @@
 name: shopify_app_bridge_flutter
 description: "A Flutter Web package that wraps the Shopify App Bridge JS SDK, enabling Flutter apps to run inside Shopify Admin as embedded apps."
-version: 1.1.1
+version: 1.1.3
 homepage: https://github.com/mohdafwan/shopify_app_bridge_flutter
 repository: https://github.com/mohdafwan/shopify_app_bridge_flutter
 issue_tracker: https://github.com/mohdafwan/shopify_app_bridge_flutter/issues
@@ -8,6 +8,9 @@ issue_tracker: https://github.com/mohdafwan/shopify_app_bridge_flutter/issues
 environment:
   sdk: ^3.11.3
   flutter: ">=1.17.0"
+
+executables:
+  build_web:
 
 dependencies:
   flutter:
